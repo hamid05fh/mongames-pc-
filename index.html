@@ -1,520 +1,889 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mongames - Ultimate Gaming Hub</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mongames - Ultimate Gaming Hub</title>
 
-    <style>
-        :root {
-            --bg-dark: #0a0a0a;
-            --bg-card: #151515;
-            --accent: #2ecc71;
-            --accent-glow: rgba(46, 204, 113, 0.4);
-            --text-main: #ffffff;
-            --text-dim: #b3b3b3;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* Light Mode Variables */
-        body.light {
-            --bg-dark: #f0f2f5;
-            --bg-card: #ffffff;
-            --text-main: #1a1a1a;
-            --text-dim: #555;
-            --accent: #27ae60;
-        }
+<style>
 
-        body {
-            margin: 0;
-            font-family: 'Cairo', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-main);
-            transition: background var(--transition), color var(--transition);
-            overflow-x: hidden;
-        }
+:root{
+    --bg-dark:#0a0a0a;
+    --bg-card:#151515;
+    --accent:#2ecc71;
+    --accent-glow:rgba(46,204,113,0.4);
+    --text-main:#ffffff;
+    --text-dim:#b3b3b3;
+    --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
 
-        /* HEADER */
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 5%;
-            background: var(--bg-card);
-            border-bottom: 3px solid var(--accent);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+/* LIGHT MODE */
 
-        .logo img {
-            height: 70px;
-            filter: drop-shadow(0 0 5px var(--accent-glow));
-            transition: var(--transition);
-        }
-        
-        .logo img:hover {
-            transform: scale(1.05) rotate(-2deg);
-        }
+body.light{
+    --bg-dark:#f0f2f5;
+    --bg-card:#ffffff;
+    --text-main:#1a1a1a;
+    --text-dim:#555;
+    --accent:#27ae60;
+}
 
-        /* MENU */
-        nav.menu {
-            display: flex;
-            gap: 20px;
-            align-items: center; /* التعديل هنا لضمان المحاذاة العمودية */
-        }
+/* GENERAL */
 
-        .menu a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 18px;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: var(--transition);
-            position: relative;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        .menu a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: var(--transition);
-            transform: translateX(-50%);
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        .menu a:hover::after { width: 80%; }
-        
-        .menu a:hover {
-            color: var(--accent);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
+body{
+    margin:0;
+    font-family:'Cairo',sans-serif;
+    background:
+    radial-gradient(circle at top right, rgba(46,204,113,0.08), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(46,204,113,0.05), transparent 25%),
+    var(--bg-dark);
+    color:var(--text-main);
+    transition:background var(--transition), color var(--transition);
+    overflow-x:hidden;
+}
 
-        /* DROPDOWN MENU */
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: var(--bg-card);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
-            z-index: 1001;
-            top: 100%;
-            right: 0;
-            border-radius: 5px;
-            border: 1px solid #333;
-            margin-top: 10px;
-        }
-        .dropdown-content a {
-            color: var(--text-main);
-            padding: 12px 16px;
-            display: block;
-            text-align: right;
-            font-size: 16px;
-            border-radius: 0;
-        }
-        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
-        .dropdown:hover .dropdown-content { display: block; }
+/* HEADER */
 
-        /* SEARCH & TOGGLE */
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 5%;
+    background:rgba(21,21,21,0.88);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(46,204,113,0.3);
+    box-shadow:0 4px 25px rgba(0,0,0,0.4);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-        .search-box {
-            display: flex;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #333;
-            border-radius: 50px;
-            padding: 5px 15px;
-            transition: var(--transition);
-        }
+body.light header{
+    background:rgba(255,255,255,0.9);
+}
 
-        .search-box:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
+.logo img{
+    height:70px;
+    filter:drop-shadow(0 0 10px var(--accent-glow));
+    transition:var(--transition);
+}
 
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            outline: none;
-            padding: 5px;
-            width: 150px;
-        }
+.logo img:hover{
+    transform:scale(1.08) rotate(-2deg);
+}
 
-        .theme-toggle {
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--accent);
-            transition: var(--transition);
-        }
+/* MENU */
 
-        /* MAIN CONTENT AREA */
-        main {
-            min-height: 60vh;
-            padding: 50px 5%;
-            text-align: center;
-        }
+nav.menu{
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
 
-        /* --- تنسيق الأقسام --- */
-        .content-section { margin-top: 60px; text-align: right; position: relative; }
-        
-        .carousel-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.menu a{
+    color:var(--text-main);
+    text-decoration:none;
+    font-weight:700;
+    font-size:17px;
+    padding:10px 15px;
+    border-radius:10px;
+    transition:var(--transition);
+    position:relative;
+}
 
-        .item-grid { 
-            display: flex; 
-            gap: 20px; 
-            overflow-x: auto; 
-            scroll-behavior: smooth;
-            padding: 20px 0;
-            flex: 1;
-            scrollbar-width: none; 
-        }
-        
-        .item-grid::-webkit-scrollbar { display: none; }
+.menu a::after{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:50%;
+    width:0;
+    height:2px;
+    background:var(--accent);
+    transition:var(--transition);
+    transform:translateX(-50%);
+    border-radius:20px;
+}
 
-        .item-card { 
-            background: var(--bg-card); 
-            padding: 10px; 
-            border-radius: 10px; 
-            border: 1px solid #333; 
-            min-width: 250px;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        .item-card:hover {
-            transform: scale(1.02);
-            border-color: var(--accent);
-        }
+.menu a:hover::after{
+    width:80%;
+}
 
-        .item-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 5px; }
-        .item-card h4 { margin: 10px 0 0; color: var(--text-main); }
+.menu a:hover{
+    color:var(--accent);
+    background:rgba(255,255,255,0.03);
+    text-shadow:0 0 10px var(--accent-glow);
+}
 
-        .nav-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            flex-shrink: 0;
-        }
+/* DROPDOWN */
 
-        .nav-btn:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--accent); }
+.dropdown{
+    position:relative;
+    display:inline-block;
+}
 
-        /* FOOTER RE-DESIGNED */
-        footer {
-            background: var(--bg-card);
-            padding: 40px 5% 20px;
-            margin-top: 50px;
-            border-top: 1px solid #333;
-        }
+.dropdown-content{
+    display:none;
+    position:absolute;
+    background-color:var(--bg-card);
+    min-width:220px;
+    box-shadow:0 15px 25px rgba(0,0,0,0.4);
+    z-index:1001;
+    top:100%;
+    right:0;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.06);
+    margin-top:12px;
+    overflow:hidden;
+}
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center; 
-            flex-wrap: wrap;
-            gap: 30px;
-        }
+.dropdown-content a{
+    color:var(--text-main);
+    padding:14px 18px;
+    display:block;
+    text-align:right;
+    font-size:15px;
+    border-radius:0;
+}
 
-        .about-card {
-            flex: 1;
-            min-width: 300px;
-            max-width: 500px;
-            background: rgba(255,255,255,0.02);
-            padding: 20px;
-            border-radius: 15px;
-            border-right: 4px solid var(--accent);
-        }
+.dropdown-content a:hover{
+    background:rgba(255,255,255,0.05);
+    color:var(--accent);
+    padding-right:24px;
+}
 
-        .about-card h3 { color: var(--accent); margin-top: 0; }
+.dropdown:hover .dropdown-content{
+    display:block;
+    animation:fadeIn 0.25s ease;
+}
 
-        .social-links {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 
-        .socials-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
+/* SEARCH */
 
-        .socials-grid a {
-            text-decoration: none;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #222;
-        }
+.actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
 
-        .socials-grid a:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .facebook:hover { background: #1877f2; }
-        .youtube:hover { background: #ff0000; }
-        .instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .tiktok:hover { background: #000; border: 1px solid #fff; }
+.search-box{
+    display:flex;
+    align-items:center;
+    background:rgba(255,255,255,0.05);
+    border:1px solid #333;
+    border-radius:50px;
+    padding:6px 15px;
+    transition:var(--transition);
+}
 
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-            color: var(--text-dim);
-        }
+.search-box:focus-within{
+    border-color:var(--accent);
+    box-shadow:0 0 15px var(--accent-glow);
+    transform:translateY(-1px);
+}
 
-        /* --- تمت إضافة التنسيق الجديد هنا --- */
-        .hero-section {
-            background-image: url('pppp.jpg'); /* --- ضَع مَسَار الصُّورَة هُنَا --- */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            padding: 80px 5%; /* زيادة الحشوة لتعطي مساحة للصورة */
-            border-radius: 15px;
-            margin-bottom: 40px; /* مسافة بين قسم الترحيب وباقي الأقسام */
-            position: relative; /* ضروري لعمل تأثير الشفافية */
-            overflow: hidden; /* لمنع الصورة الخلفية من البروز */
-        }
+.search-box input{
+    background:transparent;
+    border:none;
+    color:var(--text-main);
+    outline:none;
+    padding:5px;
+    width:160px;
+    font-family:'Cairo',sans-serif;
+}
 
-        /* إضافة طبقة شفافية فوق الصورة لجعل النص واضحاً ولتبدو الصورة خافتة */
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.6); /* طبقة سوداء شفافة، يمكنك تغيير الرقم الأخير للتحكم بالشفافية */
-            z-index: 1; /* لوضعها فوق الصورة وتحت النص */
-        }
+.search-box button{
+    background:transparent;
+    border:none;
+    color:var(--accent);
+    cursor:pointer;
+    font-size:16px;
+}
 
-        /* جعل النص فوق طبقة الشفافية وضبط لونه ليكون واضحاً */
-        .hero-section h1, 
-        .hero-section p {
-            position: relative;
-            z-index: 2;
-            color: #ffffff; /* لضمان وضوح النص الأبيض */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8); /* إضافة ظل للنص لزيادة الوضوح */
-        }
-        
-        /* ضبط حجم العبارة الرئيسية */
-        .hero-section h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
+.theme-toggle{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.05);
+    cursor:pointer;
+    font-size:18px;
+    color:var(--accent);
+    transition:var(--transition);
+}
 
-        /* ضبط حجم الفقرة التوضيحية ولونها */
-        .hero-section p {
-            color: #dddddd; /* لون فاتح قليلاً للفقرة */
-            font-size: 1.3rem;
-            max-width: 700px; /* تحديد أقصى عرض للفقرة لتبدو أجمل */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* وضعية الإضاءة (Light Mode) */
-        body.light .hero-section::before {
-            background-color: rgba(255, 255, 255, 0.5); /* طبقة بيضاء شفافة */
-        }
+.theme-toggle:hover{
+    transform:rotate(12deg) scale(1.08);
+    box-shadow:0 0 15px var(--accent-glow);
+}
 
-        body.light .hero-section h1,
-        body.light .hero-section p {
-            color: #1a1a1a;
-            text-shadow: none; /* إزالة الظل في وضع الإضاءة */
-        }
-        
-        body.light .hero-section p {
-            color: #444444;
-        }
-    </style>
+/* MAIN */
+
+main{
+    min-height:60vh;
+    padding:50px 5%;
+    text-align:center;
+}
+
+/* HERO */
+
+.hero-section{
+    background-image:url('pppp.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    padding:100px 5%;
+    border-radius:24px;
+    margin-bottom:50px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.05);
+    box-shadow:0 15px 40px rgba(0,0,0,0.45);
+}
+
+.hero-section::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background:
+    linear-gradient(to left, rgba(0,0,0,0.8), rgba(0,0,0,0.55));
+    z-index:1;
+}
+
+.hero-section::after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:rgba(46,204,113,0.15);
+    filter:blur(80px);
+    top:-100px;
+    left:-100px;
+}
+
+.hero-section h1,
+.hero-section p{
+    position:relative;
+    z-index:2;
+}
+
+.hero-section h1{
+    font-size:3.4rem;
+    margin-bottom:15px;
+    line-height:1.3;
+}
+
+.hero-section p{
+    color:#dddddd;
+    font-size:1.25rem;
+    max-width:700px;
+    margin:auto;
+}
+
+body.light .hero-section::before{
+    background:rgba(255,255,255,0.55);
+}
+
+body.light .hero-section h1,
+body.light .hero-section p{
+    color:#1a1a1a;
+    text-shadow:none;
+}
+
+/* SECTION */
+
+.content-section{
+    margin-top:70px;
+    text-align:right;
+    position:relative;
+}
+
+.content-section h3{
+    font-size:1.7rem;
+    margin-bottom:15px;
+    position:relative;
+    display:inline-block;
+}
+
+.content-section h3::after{
+    content:"";
+    position:absolute;
+    bottom:-8px;
+    right:0;
+    width:70%;
+    height:3px;
+    background:var(--accent);
+    border-radius:50px;
+}
+
+/* CAROUSEL */
+
+.carousel-container{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.item-grid{
+    display:flex;
+    gap:22px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding:20px 5px;
+    flex:1;
+    scrollbar-width:none;
+}
+
+.item-grid::-webkit-scrollbar{
+    display:none;
+}
+
+/* CARDS */
+
+.item-card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+    padding:10px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.06);
+    min-width:250px;
+    cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+    display:block;
+    transition:all 0.35s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.item-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transition:0.6s;
+}
+
+.item-card:hover::before{
+    left:100%;
+}
+
+.item-card:hover{
+    transform:translateY(-8px);
+    border-color:var(--accent);
+    box-shadow:0 12px 25px rgba(0,0,0,0.35);
+}
+
+.item-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:12px;
+    transition:var(--transition);
+}
+
+.item-card:hover img{
+    transform:scale(1.03);
+}
+
+.item-card h4{
+    margin:15px 0 5px;
+    color:var(--text-main);
+    font-size:18px;
+}
+
+/* BUTTONS */
+
+.nav-btn{
+    background:linear-gradient(135deg, var(--accent), #27ae60);
+    color:white;
+    border:none;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.3s;
+    flex-shrink:0;
+    box-shadow:0 5px 15px rgba(46,204,113,0.3);
+}
+
+.nav-btn:hover{
+    transform:scale(1.12);
+    box-shadow:0 0 18px var(--accent);
+}
+
+/* FOOTER */
+
+footer{
+    background:var(--bg-card);
+    padding:50px 5% 20px;
+    margin-top:70px;
+    border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.footer-content{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:30px;
+}
+
+.about-card{
+    flex:1;
+    min-width:300px;
+    max-width:500px;
+    background:rgba(255,255,255,0.02);
+    padding:25px;
+    border-radius:18px;
+    border-right:4px solid var(--accent);
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+.about-card h3{
+    color:var(--accent);
+    margin-top:0;
+}
+
+.about-card p{
+    line-height:1.9;
+    color:var(--text-dim);
+}
+
+.social-links{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:15px;
+}
+
+.socials-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.socials-grid a{
+    text-decoration:none;
+    color:#fff;
+    padding:12px 20px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:bold;
+    transition:var(--transition);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#222;
+}
+
+.socials-grid a:hover{
+    transform:translateY(-5px) scale(1.03);
+    box-shadow:0 8px 18px rgba(0,0,0,0.35);
+}
+
+.facebook:hover{
+    background:#1877f2;
+}
+
+.youtube:hover{
+    background:#ff0000;
+}
+
+.instagram:hover{
+    background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+}
+
+.tiktok:hover{
+    background:#000;
+    border:1px solid #fff;
+}
+
+.copyright{
+    text-align:center;
+    margin-top:40px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.05);
+    font-size:14px;
+    color:var(--text-dim);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+    header{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    nav.menu{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero-section h1{
+        font-size:2.5rem;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .search-box input{
+        width:110px;
+    }
+
+    .hero-section{
+        padding:70px 20px;
+    }
+
+    .hero-section h1{
+        font-size:2rem;
+    }
+
+    .hero-section p{
+        font-size:1rem;
+    }
+
+    .item-card{
+        min-width:220px;
+    }
+
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">
-        <a href="index.html">
-            <img src="mongames.png" alt="mongames logo">
-        </a>
-    </div>
 
-    <nav class="menu">
-        <a href="#"><i class="fas fa-home"></i> الرئيسية</a>
-        
-        <div class="dropdown">
-            <a href="#"><i class="fas fa-gamepad"></i> الألعاب <i class="fas fa-caret-down"></i></a>
-            <div class="dropdown-content">
-                <a href="#">أقسام الألعاب</a>
-                <a href="#">الألعاب الأكثر تحميلاً</a>
-                <a href="#">آخر تحديثات الألعاب</a>
-                <a href="#">اطلب لعبة</a>
-                <a href="#">لعبة عشوائية</a>
-            </div>
-        </div>
+<div class="logo">
+    <a href="index.html">
+        <img src="mongames.png" alt="mongames logo">
+    </a>
+</div>
 
-        <div class="dropdown">
-            <a href="#"><i class="fas fa-microchip"></i> البرامج <i class="fas fa-caret-down"></i></a>
-            <div class="dropdown-content">
-                <a href="#">أقسام البرامج</a>
-                <a href="#">البرامج الأكثر تحميلاً</a>
-                <a href="#">اطلب برنامجا</a>
-            </div>
-        </div>
+<nav class="menu">
 
-        <div class="dropdown">
-            <a href="patch.html"><i class="fas fa-tools"></i> الباتشات <i class="fas fa-caret-down"></i></a>
-            <div class="dropdown-content">
-                <a href="#">بيس 2017</a>
-                <a href="#">بيس 2013</a>
-                <a href="#">بيس 2019</a>
-                <a href="#">بيس 2021</a>
-            </div>
-        </div>
+    <a href="#"><i class="fas fa-home"></i> الرئيسية</a>
 
-        <a href="#"><i class="fas fa-envelope"></i> تواصل</a>
-    </nav>
+    <div class="dropdown">
+        <a href="#"><i class="fas fa-gamepad"></i> الألعاب <i class="fas fa-caret-down"></i></a>
 
-    <div class="actions">
-        <div class="search-box">
-            <input type="text" placeholder=" بحث... ">
-            <button style="background:transparent; border:none; color:var(--accent); cursor:pointer;">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <div class="theme-toggle" id="themeBtn">
-            <i class="fas fa-moon"></i>
+        <div class="dropdown-content">
+            <a href="#">أقسام الألعاب</a>
+            <a href="#">الألعاب الأكثر تحميلاً</a>
+            <a href="#">آخر تحديثات الألعاب</a>
+            <a href="#">اطلب لعبة</a>
+            <a href="#">لعبة عشوائية</a>
         </div>
     </div>
+
+    <div class="dropdown">
+        <a href="#"><i class="fas fa-microchip"></i> البرامج <i class="fas fa-caret-down"></i></a>
+
+        <div class="dropdown-content">
+            <a href="#">أقسام البرامج</a>
+            <a href="#">البرامج الأكثر تحميلاً</a>
+            <a href="#">اطلب برنامجا</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="patch.html"><i class="fas fa-tools"></i> الباتشات <i class="fas fa-caret-down"></i></a>
+
+        <div class="dropdown-content">
+            <a href="#">بيس 2017</a>
+            <a href="#">بيس 2013</a>
+            <a href="#">بيس 2019</a>
+            <a href="#">بيس 2021</a>
+        </div>
+    </div>
+
+    <a href="#"><i class="fas fa-envelope"></i> تواصل</a>
+
+</nav>
+
+<div class="actions">
+
+    <div class="search-box">
+
+        <input type="text" placeholder=" بحث... ">
+
+        <button>
+            <i class="fas fa-search"></i>
+        </button>
+
+    </div>
+
+    <div class="theme-toggle" id="themeBtn">
+        <i class="fas fa-moon"></i>
+    </div>
+
+</div>
+
 </header>
 
 <main>
-    <div class="hero-section">
-        <h1>مرحباً بك في <span style="color:var(--accent)">mongames</span></h1>
-        <p>أقوى الباتشات والألعاب والبرامج في مكان واحد.</p>
+
+<div class="hero-section">
+
+    <h1>
+        مرحباً بك في
+        <span style="color:var(--accent)">mongames</span>
+    </h1>
+
+    <p>
+        أقوى الباتشات والألعاب والبرامج في مكان واحد.
+    </p>
+
+</div>
+
+<section class="content-section">
+
+    <h3>آخر الألعاب</h3>
+
+    <div class="carousel-container">
+
+        <button class="nav-btn" onclick="scrollCarousel('gamesGrid', 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="item-grid" id="gamesGrid">
+
+            <a href="game-details.html" class="item-card">
+                <img src="pes17.jpg" alt="لعبة">
+                <h4 style="text-align:center;"> Pro Evolution soccer 2017 </h4>
+            </a>
+
+            <a href="game-details.html" class="item-card">
+                <img src="gta sa.png" alt="لعبة">
+                <h4 style="text-align:center;"> Grand Theft Auto : San Andereas </h4>
+            </a>
+
+            <a href="game-details.html" class="item-card">
+                <img src="pes13.png" alt="لعبة">
+                <h4 style="text-align:center;"> Pro Evolution soccer 2013 </h4>
+            </a>
+
+        </div>
+
+        <button class="nav-btn" onclick="scrollCarousel('gamesGrid', -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
     </div>
 
-    <section class="content-section">
-        <h3>آخر الألعاب</h3>
-        <div class="carousel-container">
-            <button class="nav-btn" onclick="scrollCarousel('gamesGrid', 1)"><i class="fas fa-chevron-right"></i></button>
-            <div class="item-grid" id="gamesGrid">
-                <a href="game-details.html" class="item-card"><img src="#" alt="لعبة"><h4 style="text-align:center;">لعبة 1</h4></a>
-                <a href="game-details.html" class="item-card"><img src="#" alt="لعبة"><h4 style="text-align:center;">لعبة 2</h4></a>
-                <a href="game-details.html" class="item-card"><img src="#" alt="لعبة"><h4 style="text-align:center;">لعبة 3</h4></a>
-            </div>
-            <button class="nav-btn" onclick="scrollCarousel('gamesGrid', -1)"><i class="fas fa-chevron-left"></i></button>
-        </div>
-    </section>
+</section>
 
-    <section class="content-section">
-        <h3>أحدث البرامج</h3>
-        <div class="carousel-container">
-            <button class="nav-btn" onclick="scrollCarousel('programsGrid', 1)"><i class="fas fa-chevron-right"></i></button>
-            <div class="item-grid" id="programsGrid">
-                <a href="program-details.html" class="item-card"><img src="#" alt="برنامج"><h4 style="text-align:center;">برنامج 1</h4></a>
-                <a href="program-details.html" class="item-card"><img src="#" alt="برنامج"><h4 style="text-align:center;">برنامج 2</h4></a>
-                <a href="program-details.html" class="item-card"><img src="#" alt="برنامج"><h4 style="text-align:center;">برنامج 3</h4></a>
-            </div>
-            <button class="nav-btn" onclick="scrollCarousel('programsGrid', -1)"><i class="fas fa-chevron-left"></i></button>
-        </div>
-    </section>
+<section class="content-section">
 
-    <section class="content-section">
-        <h3>آخر الباتشات</h3>
-        <div class="carousel-container">
-            <button class="nav-btn" onclick="scrollCarousel('patchesGrid', 1)"><i class="fas fa-chevron-right"></i></button>
-            <div class="item-grid" id="patchesGrid">
-                <a href="patch-details.html" class="item-card"><img src="#" alt="باتش"><h4 style="text-align:center;">باتش 1</h4></a>
-                <a href="patch-details.html" class="item-card"><img src="#" alt="باتش"><h4 style="text-align:center;">باتش 2</h4></a>
-                <a href="patch-details.html" class="item-card"><img src="#" alt="باتش"><h4 style="text-align:center;">باتش 3</h4></a>
-            </div>
-            <button class="nav-btn" onclick="scrollCarousel('patchesGrid', -1)"><i class="fas fa-chevron-left"></i></button>
+    <h3>أحدث البرامج</h3>
+
+    <div class="carousel-container">
+
+        <button class="nav-btn" onclick="scrollCarousel('programsGrid', 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="item-grid" id="programsGrid">
+
+            <a href="program-details.html" class="item-card">
+                <img src="winrar.png" alt="برنامج">
+                <h4 style="text-align:center;"> WinRAR </h4>
+            </a>
+
+            <a href="program-details.html" class="item-card">
+                <img src="capcut.jpg" alt="برنامج">
+                <h4 style="text-align:center;"> CapCut </h4>
+            </a>
+
+            <a href="program-details.html" class="item-card">
+                <img src="core temp.png" alt="برنامج">
+                <h4 style="text-align:center;"> Core Temp </h4>
+            </a>
+
         </div>
-    </section>
+
+        <button class="nav-btn" onclick="scrollCarousel('programsGrid', -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+    </div>
+
+</section>
+
+<section class="content-section">
+
+    <h3>آخر الباتشات</h3>
+
+    <div class="carousel-container">
+
+        <button class="nav-btn" onclick="scrollCarousel('patchesGrid', 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="item-grid" id="patchesGrid">
+
+            <a href="patch-details.html" class="item-card">
+                <img src="rz 26 patch.png" alt="باتش">
+                <h4 style="text-align:center;"> PES 2017 RZ 26 Patch AIO </h4>
+            </a>
+
+            <a href="patch-details.html" class="item-card">
+                <img src="#" alt="باتش">
+                <h4 style="text-align:center;">باتش 2</h4>
+            </a>
+
+            <a href="patch-details.html" class="item-card">
+                <img src="#" alt="باتش">
+                <h4 style="text-align:center;">باتش 3</h4>
+            </a>
+
+        </div>
+
+        <button class="nav-btn" onclick="scrollCarousel('patchesGrid', -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+    </div>
+
+</section>
+
 </main>
 
 <footer>
-    <div class="footer-content">
-        <div class="about-card">
-            <h3><i class="fas fa-info-circle"></i> حول الموقع</h3>
-            <p>
-                نحن نسعى لتوفير أفضل تجربة للجيمرز العرب، من خلال تقديم تحديثات دورية وباتشات حصرية لأشهر الألعاب العالمية بأعلى جودة وبدون روابط معقدة.
-            </p>
-        </div>
 
-        <div class="social-links">
-            <h3 style="margin-bottom:20px;"> تابعنا على : </h3>
-            <div class="socials-grid">
-                <a class="facebook" href="#"><i class="fab fa-facebook"></i> فيسبوك</a>
-                <a class="instagram" href="#"><i class="fab fa-instagram"></i> إنستغرام</a>
-                <a class="youtube" href="#"><i class="fab fa-youtube"></i> يوتيوب</a>
-                <a class="tiktok" href="#"><i class="fab fa-tiktok"></i> تيك توك</a>
-            </div>
-        </div>
+<div class="footer-content">
+
+    <div class="about-card">
+
+        <h3>
+            <i class="fas fa-info-circle"></i>
+            حول الموقع
+        </h3>
+
+        <p>
+            نحن نسعى لتوفير أفضل تجربة للجيمرز العرب، من خلال تقديم تحديثات دورية وباتشات حصرية لأشهر الألعاب العالمية بأعلى جودة وبدون روابط معقدة.
+        </p>
+
     </div>
 
-    <div class="copyright">
-        جميع الحقوق محفوظة لفريق عمل  © 2026 mongames
+    <div class="social-links">
+
+        <h3 style="margin-bottom:20px;">
+            تابعنا على :
+        </h3>
+
+        <div class="socials-grid">
+
+            <a class="facebook" href="#">
+                <i class="fab fa-facebook"></i>
+                فيسبوك
+            </a>
+
+            <a class="instagram" href="#">
+                <i class="fab fa-instagram"></i>
+                إنستغرام
+            </a>
+
+            <a class="youtube" href="#">
+                <i class="fab fa-youtube"></i>
+                يوتيوب
+            </a>
+
+            <a class="tiktok" href="#">
+                <i class="fab fa-tiktok"></i>
+                تيك توك
+            </a>
+
+        </div>
+
     </div>
+
+</div>
+
+<div class="copyright">
+    جميع الحقوق محفوظة لفريق عمل © 2026 mongames
+</div>
+
 </footer>
 
 <script>
-    const themeBtn = document.getElementById('themeBtn');
-    const body = document.body;
-    const icon = themeBtn.querySelector('i');
 
-    themeBtn.addEventListener('click', () => {
-        body.classList.toggle('light');
-        if(body.classList.contains('light')) {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-        }
-    });
+const themeBtn = document.getElementById('themeBtn');
+const body = document.body;
+const icon = themeBtn.querySelector('i');
 
-    function scrollCarousel(gridId, direction) {
-        const grid = document.getElementById(gridId);
-        if (grid && grid.children.length > 0) {
-            const cardWidth = grid.children[0].offsetWidth + 20; 
-            grid.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
-        }
+themeBtn.addEventListener('click', () => {
+
+    body.classList.toggle('light');
+
+    if(body.classList.contains('light')){
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }else{
+        icon.classList.replace('fa-sun', 'fa-moon');
     }
+
+});
+
+function scrollCarousel(gridId, direction){
+
+    const grid = document.getElementById(gridId);
+
+    if(grid && grid.children.length > 0){
+
+        const cardWidth = grid.children[0].offsetWidth + 22;
+
+        grid.scrollBy({
+            left: direction * cardWidth,
+            behavior: 'smooth'
+        });
+
+    }
+
+}
+
 </script>
 
 </body>
